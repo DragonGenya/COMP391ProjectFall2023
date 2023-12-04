@@ -18,6 +18,11 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         rb.velocity = transform.right * EnemySpeed;
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
 }

@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
     public float lifeTime = 1f;
     public Transform attackPos;
     public LayerMask whatIsEnemies;
-    public Animator playerAnim;
     public float attackRange;
     public int damage = 1;
 
@@ -25,8 +24,6 @@ public class Bullet : MonoBehaviour
        
             if (Input.GetKey(KeyCode.Mouse1))
             {
-
-                playerAnim.SetTrigger("attack");
                 Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
@@ -44,7 +41,6 @@ public class Bullet : MonoBehaviour
 
                 Destroy(ThingIHit.gameObject);
         }
-        Destroy(gameObject);
         DestroyProjectile();
     }
 

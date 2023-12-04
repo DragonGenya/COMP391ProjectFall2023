@@ -197,7 +197,7 @@ MonoBehaviour:
   camAnim: {fileID: 4744946374212002498}
   health: 2
   EnemySpeed: 2
-  rb: {fileID: 0}
+  rb: {fileID: 3272256207234260789}
 --- !u!1 &5885056779058745284
 GameObject:
   m_ObjectHideFlags: 0
