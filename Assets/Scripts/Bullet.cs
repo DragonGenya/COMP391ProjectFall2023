@@ -4,25 +4,52 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 10f;
+    public float speed = 10f;
     private Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+    public float lifeTime = 1f;
+    public Transform attackPos;
+    public LayerMask whatIsEnemies;
+    public Animator playerAnim;
+    public float attackRange;
+    public int damage = 1;
+
+
+    private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
+        Invoke("DestroyProjectile", lifeTime);
+    }
+    void Update()
+    {
+       
+            if (Input.GetKey(KeyCode.Mouse1))
+            {
+
+                playerAnim.SetTrigger("attack");
+                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+                for (int i = 0; i < enemiesToDamage.Length; i++)
+                {
+                    enemiesToDamage[i].GetComponent<EnemyBehaviour>().health -= damage;
+
+                }
+            }
+     
     }
 
-    private void OnTriggerEnter2D(Collider2D otherThing)
+    private void OnTriggerEnter2D(Collider2D ThingIHit)
     {
-        if(otherThing.tag == "Enemy")
+        if (ThingIHit.tag == "Enemy")
         {
-            otherThing.GetComponent<EnemyBehaviour>().LifeTotal--;
-            if (otherThing.GetComponent<EnemyBehaviour>().LifeTotal == 0)
-            {
-                Destroy(otherThing.gameObject);
-            }
+
+                Destroy(ThingIHit.gameObject);
         }
+        Destroy(gameObject);
+        DestroyProjectile();
+    }
+
+    void DestroyProjectile()
+    {
         Destroy(gameObject);
     }
 }

@@ -7,11 +7,8 @@ public class Movement : MonoBehaviour
     public float speed = 5f;
     public float jumpPower = 10f;
     private bool FacingRight = true;
-    private int Life = 5;
+    private int Life = 3;
    
-    [SerializeField] private float damageCooldown = 2f;
-    private bool canTakeDamage = true;
-    private bool canDash = true;
     private Rigidbody2D rb;
 
     [SerializeField] private AudioSource jumpSoundEffect;
@@ -39,30 +36,18 @@ public class Movement : MonoBehaviour
             this.transform.Rotate(0f, 180f, 0f);
             FacingRight = !FacingRight;
         }
-    }
 
-    private IEnumerator ResetDamageCooldown()
-    {
-        yield return new WaitForSeconds(damageCooldown);
-        Debug.Log("Damage cooldown reset");
-        canTakeDamage = true;
     }
 
     public void TakeDamage(int damage)
     {
-        if (!canTakeDamage)
-        {
-            return;
-        }
-        canTakeDamage = false;
         Life -= damage;
-        
         if (Life <= 0)
         {
             // Reload the scene
             UnityEngine.SceneManagement.SceneManager.LoadScene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
-        StartCoroutine(ResetDamageCooldown());
+
     }
 }

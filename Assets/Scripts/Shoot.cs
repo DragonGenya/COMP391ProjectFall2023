@@ -5,11 +5,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     public Transform ShootPoint;
-    public GameObject Bulletx;
-    public LayerMask whatIsEnemies;
-    public int damage = 1;
-
-    public float attackRange;
+    public GameObject Bullet;
 
     [SerializeField] private AudioSource attackSoundEffect;
 
@@ -18,15 +14,10 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Instantiate(Bulletx, ShootPoint.position, ShootPoint.rotation);
+            Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
             attackSoundEffect.Play();
  
-            Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(ShootPoint.position, attackRange, whatIsEnemies);
-            for (int i = 0; i < enemiesToDamage.Length; i++)
-            {
-                enemiesToDamage[i].GetComponent<EnemyBehaviour>().LifeTotal -= damage;
-
-            }
         }
+
     }
 }
