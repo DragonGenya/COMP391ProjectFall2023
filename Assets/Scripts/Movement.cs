@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour
 {
     private float horizontal;
     public float speed = 5f;
     public float jumpPower = 10f;
     private bool FacingRight = true;
-    private int Life = 3;
    
     private Rigidbody2D rb;
 
@@ -38,16 +38,29 @@ public class Movement : MonoBehaviour
         }
 
     }
-
-    public void TakeDamage(int damage)
+    private IEnumerator Reset()
     {
-        Life -= damage;
-        if (Life <= 0)
-        {
-            // Reload the scene
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("You have been hit!");
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
+            //SceneManager.GetSceneByBuildIndex(0);
+            //StartCoroutine(Reset());
+        }else if(other.gameObject.CompareTag("Boss"))
+        {
+            Debug.Log("You have been hit!");
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
+            //SceneManager.GetSceneByBuildIndex(0);
+            //StartCoroutine(Reset());
+        }
     }
 }

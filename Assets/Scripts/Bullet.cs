@@ -34,15 +34,14 @@ public class Bullet : MonoBehaviour
      
     }
 
-    private void OnTriggerEnter2D(Collider2D ThingIHit)
+   /* private void OnTriggerEnter2D(Collider2D ThingIHit)
     {
-        if (ThingIHit.tag == "Enemy")
-        {
+//        {
 
                 Destroy(ThingIHit.gameObject);
-        }
+        //}
         DestroyProjectile();
-    }
+    }*/
 
     void DestroyProjectile()
     {

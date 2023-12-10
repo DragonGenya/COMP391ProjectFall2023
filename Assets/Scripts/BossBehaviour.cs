@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class EnemyBehaviour : MonoBehaviour
+public class BossBehaviour : MonoBehaviour
 {
+
     public Animator camAnim;
-    public int health = 1;
+    public int health = 5;
     public int EnemySpeed = 20;
     public Rigidbody2D rb;
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         rb.velocity = transform.right * EnemySpeed;
-        
+
 
     }
     //good bullet code
@@ -27,13 +27,12 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(gameObject);
+            health--;
+            if(health <= 0)
+            {
+                Destroy(gameObject);
+            }
+          
         }
     }
-
-
-
-
-
-
 }
